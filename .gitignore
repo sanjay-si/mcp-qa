@@ -1,0 +1,48 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Test results
+*.result
+*.xml
+*.html
+
+# Coverage reports
+.coverage
+htmlcov/
+*.cover
+
+# Miscellaneous
+*.DS_Store
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+
+# Node.js
+node_modules/
+
+# Automation specific files
+automation_plan.txt
+automation_plan_results.txt
+fs_files/
