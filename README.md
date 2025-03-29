@@ -1,15 +1,17 @@
 # AI-Powered QA Automation Platform
 
-This project integrates AI agents with Playwright to create autonomous QA testing capabilities for web applications.
+This project integrates AI agents with Playwright and file server to create autonomous QA testing capabilities for web applications.
 
 ## Overview
 
-The AI-Powered QA Automation Platform leverages the Model Context Protocol (MCP) and Large Language Models (LLMs) to enable intelligent, autonomous testing of web applications. The system uses an AI agent that can understand web application functionality, create test plans, execute tests using Playwright, and generate detailed test reports - all with minimal human intervention.
+The AI-Powered QA Automation tool leverages the Model Context Protocol (MCP) and Large Language Models (LLMs) to enable intelligent, autonomous testing of web applications or single page web applications. Built on the emerging OpenAI Agent SDK, this implementation showcases how AI can be integrated into QA workflows. The system uses an AI agent that can understand web application functionality, create test plans, execute tests using Playwright, and generate detailed test reports - all with minimal human intervention.
+
+This project serves as a conceptual implementation that demonstrates the potential of AI-driven testing. As both the OpenAI Agent SDK and MCP continue to evolve, this framework can be extended and customized by teams based on their specific testing needs and requirements.
 
 ## Benefits
 
 - **Autonomous Testing**: Reduces manual QA effort by enabling AI to plan and execute tests
-- **Comprehensive Coverage**: AI agents intelligently identify key features and create thorough test plans
+- **Coverage**: AI agents intelligently identify key features and create thorough test plans
 - **Self-documenting**: Automatically generates test plans and detailed results with evidence in the form of screenshots
 - **Adaptability**: Has potential to work with any web application without requiring custom test scripts
 - **Reduced Maintenance**: Less code to maintain compared to traditional automation frameworks driven by heavy coding and maintenance overhead
@@ -50,10 +52,33 @@ graph TD
     end
 ```
 
+### How Our AI-Powered Testing Platform Works
+
+1. **QA Engineer Initiates Testing**
+   - You provide the target website URL
+   - The system begins the automated testing process
+
+2. **AI Agent Execution Flow**
+   - Analyzes the website to identify testable components and functionality
+   - Drafts a test plan based on the analysis
+   - Orchestrates browser interactions through Playwright MCP server
+   - Captures evidence through screenshots and interaction logs
+   - Compiles detailed test results and documentation
+   - Saves the test results and evidence using the filesystem MCP server
+
+3. **Technical Components**
+   - **Filesystem MCP Server**: Manages file operations for test artifacts, evidence, and reports, enables local file system access
+   - **Playwright MCP Server**: Facilitates browser automation and UI interaction
+   - **Azure OpenAI**: Powers the reasoning engine that drives test strategy and execution
+
+4. **Data and Control Flow**
+   - The AI reasoning engine determines test scenarios → Playwright executes precise browser interactions → Results are documented through the filesystem server
+   - This architecture eliminates repetitive script maintenance while maintaining professional testing standards
+
 ## How It Works
 
-1. **Analysis Phase**: The AI agent explores the target web application to understand its functionality and features (can be done by the agent itself or by the user)
-2. **Planning Phase**: Based on its analysis, the agent creates a comprehensive test plan covering identified features
+1. **Analysis Phase**: The AI agent explores the target web application / single page web application to understand its UI components functionality and features (can be done by the agent itself or by the user)
+2. **Planning Phase**: Based on its analysis, the agent creates a detailed test plan covering identified features
 3. **Execution Phase**: The agent uses Playwright through MCP to execute tests on the web interface
 4. **Reporting Phase**: The agent documents test results with screenshots and generates a detailed report by leveraging another MCP server (filesystem based)
 
