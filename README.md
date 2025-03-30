@@ -23,7 +23,7 @@ This project serves as a conceptual implementation that demonstrates the potenti
 .
 ├── .env                   # Environment variables configuration
 ├── .env.template          # Template for environment variables
-├── playwrite/             # Main project directory
+├── playwright/            # Main project directory
 │   └── llm-automation/    # AI automation implementation
 │       ├── program.py     # Main Python script for AI testing
 │       ├── agent_instructions.txt # Instructions for the AI agent
@@ -104,7 +104,7 @@ The integration of AI in testing changes the role of QA automation engineers:
 
 1. Clone this repository
 2. Copy `.env.template` to `.env` and fill in your Azure OpenAI credentials
-3. Navigate to the `playwrite/llm-automation` directory
+3. Navigate to the `playwright/llm-automation` directory
 4. Run `python program.py` to start the AI-powered testing
 
 ## Requirements
