@@ -1,4 +1,4 @@
-# AI-Powered QA Automation Platform
+# AI-Powered QA Automation
 
 This project integrates AI agents with Playwright and file server to create autonomous QA testing capabilities for web applications.
 
