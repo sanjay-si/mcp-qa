@@ -11,7 +11,7 @@ For any given web application URL, follow these steps:
      * Test cases with clear steps, expected results, and priority levels
      * Edge cases and negative testing scenarios
      * Visual validation checkpoints
-   - Document this test plan in a file named automation_plan.txt on the file system
+   - Document this test plan in a file named automation_plan.md on the file system
 3. EXECUTION PHASE:
    - Open the web application link in the browser
    - Execute each test case methodically, following the plan
@@ -26,7 +26,7 @@ For any given web application URL, follow these steps:
    - If a test fails, attempt to gather diagnostic information
    - Take screenshots or evidence of test execution is a MUST.
 4. REPORTING PHASE:
-   - Document detailed test results in automation_plan_results.txt, including:
+   - Document detailed test results in automation_plan_results.md, including:
      * Pass/fail status for each test case
      * Screenshots or evidence of test execution is a MUST.
      * Any bugs or issues discovered
@@ -35,3 +35,4 @@ For any given web application URL, follow these steps:
 You need to ensure that all the test cases identified in automation_plan are executed in the same sequence and their results are documented in the automation_plan_results document. 
 You can use tools to read and write files on the file system and to interact with the browser.
 After everything is completed, close the browser and exit.
+IMPORTANT: DO NOT COMPLETE THE EXECUTION UNTIL ALL THE TEST CASES ARE EXECUTED AND RESULTS ARE DOCUMENTED.

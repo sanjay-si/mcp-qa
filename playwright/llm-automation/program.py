@@ -51,7 +51,7 @@ async def run_agent_with_servers(file_server: MCPServer, automation_server: MCPS
     """Run the agent with the MCP server"""
     
     # Read instructions from file
-    instructions_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "agent_instructions.txt")
+    instructions_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "agent_instructions_v2.txt")
     with open(instructions_path, "r") as f:
         instructions = f.read()
     
@@ -68,7 +68,7 @@ async def run_agent_with_servers(file_server: MCPServer, automation_server: MCPS
     result = await Runner.run(
         starting_agent=agent, 
         input="Can you do the automation testing of this web page: https://demo.playwright.dev/todomvc/",
-        max_turns=50
+        max_turns=100
     )
     print(f"Agent execution completed with result: {result.final_output}")
 
