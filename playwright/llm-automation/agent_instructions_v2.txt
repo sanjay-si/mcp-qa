@@ -25,6 +25,7 @@ For any given web application URL, follow these steps:
      * Test case status (PASS/FAIL)
      * Screenshot references
      * Brief error descriptions if any
-   - Provide a quick summary of test coverage
+   - Provide a quick summary of test coverage in ONLY 2 lines. 
 
-Complete all test cases and document results before closing the browser.
+IMPORTANT: ENSURE TO OPEN THE WEB BROWSER WHILE DOING THE EXECUTION OF TEST CASES.
+NOTE: Complete all test cases and document results before closing the browser.
