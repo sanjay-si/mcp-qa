@@ -108,6 +108,48 @@ The integration of AI in testing changes the role of QA automation engineers:
 3. Navigate to the `playwright/llm-automation` directory
 4. Run `python program.py` to start the AI-powered testing
 
+## Usage Examples
+
+Below are a few common ways to run the automation agent. These examples assume
+you have installed the Python dependencies (`pip install -r requirements.txt`)
+and have Node.js available for Playwright.
+
+### Example 1: Run the default demo
+
+The repository includes a sample input that tests the Playwright TodoMVC demo.
+From the `playwright/llm-automation` directory, run:
+
+```bash
+python program.py
+```
+
+The agent will spin up both MCP servers and execute the test plan against
+`https://demo.playwright.dev/todomvc/`. Test artifacts are stored under
+`playwright/llm-automation/fs_files`.
+
+### Example 2: Target a different site
+
+To test another website, edit `program.py` and update the `input` string passed
+to `Runner.run()`. For instance, change the line containing the TodoMVC URL to
+your desired site:
+
+```python
+result = await Runner.run(
+    starting_agent=agent,
+    input="Can you do the automation testing of this web page: https://example.com/",
+    max_turns=100
+)
+```
+
+Run the program again to execute tests on the new target.
+
+### Example 3: Adjust agent instructions
+
+The `agent_instructions_v*.txt` files define how the agent performs testing. You
+can modify these files or create new ones for custom scenarios. Update the path
+in `program.py` (variable `instructions_path`) to point to your instruction file
+before running the agent.
+
 ## Requirements
  - Refer to the requirements.txt file for the list of dependencies
 
