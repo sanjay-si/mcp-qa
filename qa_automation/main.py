@@ -4,8 +4,8 @@ import asyncio
 import os
 import shutil
 from pathlib import Path
+from openai import AsyncOpenAI
 
-from .config import configure_openai_client
 from .servers import filesystem_server, playwright_server
 from .agent_runner import run_agent
 
@@ -21,7 +21,7 @@ async def main() -> None:
         print("Error: npm/npx is not installed. Please install it and try again.")
         return
 
-    client = configure_openai_client()
+    client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
     samples_dir = Path(__file__).parent / "fs_files"
     samples_dir.mkdir(exist_ok=True)

@@ -28,33 +28,12 @@ atexit.register(silence_stderr_on_exit)
 
 load_dotenv()
 
-# Load environment variables
-AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY")
-AZURE_OPENAI_ENDPOINT = os.getenv("AZURE_OPENAI_ENDPOINT")
-AZURE_OPENAI_CHAT_DEPLOYMENT = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
-AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL")
-AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")
-
 # Model selection
-MODEL_PROVIDER = os.getenv("MODEL_PROVIDER", "azure").lower()
+MODEL_PROVIDER = os.getenv("MODEL_PROVIDER", "openai").lower()
 
 
 def get_model():
     """Initialize the LLM model based on MODEL_PROVIDER."""
-
-    if MODEL_PROVIDER == "azure":
-        from openai import AsyncAzureOpenAI
-
-        client = AsyncAzureOpenAI(
-            api_key=AZURE_OPENAI_API_KEY,
-            azure_endpoint=AZURE_OPENAI_ENDPOINT,
-            api_version=AZURE_OPENAI_API_VERSION,
-        )
-        set_default_openai_client(client)
-        return OpenAIChatCompletionsModel(
-            model=AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL,
-            openai_client=client,
-        )
 
     if MODEL_PROVIDER == "openai":
         from openai import AsyncOpenAI

@@ -4,7 +4,7 @@ import asyncio
 from pathlib import Path
 from agents import Agent, Runner, OpenAIChatCompletionsModel
 
-from .config import AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL
+MODEL_NAME = "gpt-3.5-turbo"  # Default or configurable elsewhere
 
 
 def build_agent(instructions: str, file_server, automation_server, client) -> Agent:
@@ -12,7 +12,7 @@ def build_agent(instructions: str, file_server, automation_server, client) -> Ag
         name="Automation Agent",
         instructions=instructions,
         mcp_servers=[file_server, automation_server],
-        model=OpenAIChatCompletionsModel(model=AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL, openai_client=client),
+        model=OpenAIChatCompletionsModel(model=MODEL_NAME, openai_client=client),
     )
 
 
@@ -24,7 +24,9 @@ async def run_agent(file_server, automation_server, client) -> None:
 
     result = await Runner.run(
         starting_agent=agent,
-        input="Can you do the automation testing of this web page: https://demo.playwright.dev/todomvc/",
+        # input="Got the web page https://demo.playwright.dev/todomvc/, create two tasks and close the browser",
+        # input="Book a flight from New Delhi to Ahmedabad using https://www.skyscanner.co.in/",
+        input="goto http://hrberry.com/smarthr/index.php?q=cms&m=index&client=atmecs, login using a userid & password as '10' and 'wvJyR*mcn$XT67Y'. Then goto leave approval menu.",
         max_turns=100,
     )
     print(f"Agent execution completed with result: {result.final_output}")
