@@ -69,7 +69,7 @@ graph TD
 3. **Technical Components**
    - **Filesystem MCP Server**: Manages file operations for test artifacts, evidence, and reports, enables local file system access
    - **Playwright MCP Server**: Facilitates browser automation and UI interaction
-   - **Azure OpenAI**: Powers the reasoning engine that drives test strategy and execution
+   - **LLM Provider**: Powers the reasoning engine that drives test strategy and execution. Supported providers include Azure OpenAI, OpenAI, Claude, DeepSeek and Gemini.
 
 4. **Data and Control Flow**
    - The AI reasoning engine determines test scenarios → Playwright executes precise browser interactions → Results are documented through the filesystem server
@@ -103,7 +103,8 @@ The integration of AI in testing changes the role of QA automation engineers:
 ## Getting Started
 
 1. Clone this repository
-2. Copy `.env.template` to `.env` and fill in your Azure OpenAI credentials
+2. Copy `.env.template` to `.env` and fill in credentials for your chosen model provider.
+   - Set `MODEL_PROVIDER` to `azure`, `openai`, `claude`, `deepseek`, or `gemini`.
 3. Navigate to the `playwright/llm-automation` directory
 4. Run `python program.py` to start the AI-powered testing
 

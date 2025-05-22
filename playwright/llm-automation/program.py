@@ -1,18 +1,20 @@
 from agents import (
-    Agent, 
+    Agent,
     Runner,
     set_default_openai_client,
     OpenAIChatCompletionsModel,
+    AnthropicMessagesModel,
+    GoogleGenerativeAIChatModel,
     set_tracing_disabled,
 )
-from agents.mcp import MCPServer, MCPServerStdio, MCPServerSse
+from agents.mcp import MCPServer, MCPServerStdio
 import os
 import shutil
 from dotenv import load_dotenv
-from openai import AsyncAzureOpenAI
 import asyncio
 import sys
 import warnings
+import atexit
 
 warnings.filterwarnings("ignore", category=ResourceWarning)
 
@@ -22,7 +24,6 @@ original_stderr = sys.stderr
 def silence_stderr_on_exit():
     sys.stderr = open(os.devnull, 'w')
 
-import atexit
 atexit.register(silence_stderr_on_exit)
 
 load_dotenv()
@@ -34,15 +35,69 @@ AZURE_OPENAI_CHAT_DEPLOYMENT = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT")
 AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL")
 AZURE_OPENAI_API_VERSION = os.getenv("AZURE_OPENAI_API_VERSION")
 
-# Configure Azure OpenAI client
-client = AsyncAzureOpenAI(
-    api_key=AZURE_OPENAI_API_KEY,
-    azure_endpoint=AZURE_OPENAI_ENDPOINT,
-    api_version=AZURE_OPENAI_API_VERSION
-)
+# Model selection
+MODEL_PROVIDER = os.getenv("MODEL_PROVIDER", "azure").lower()
 
-# Configure the default OpenAI client
-set_default_openai_client(client)
+
+def get_model():
+    """Initialize the LLM model based on MODEL_PROVIDER."""
+
+    if MODEL_PROVIDER == "azure":
+        from openai import AsyncAzureOpenAI
+
+        client = AsyncAzureOpenAI(
+            api_key=AZURE_OPENAI_API_KEY,
+            azure_endpoint=AZURE_OPENAI_ENDPOINT,
+            api_version=AZURE_OPENAI_API_VERSION,
+        )
+        set_default_openai_client(client)
+        return OpenAIChatCompletionsModel(
+            model=AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL,
+            openai_client=client,
+        )
+
+    if MODEL_PROVIDER == "openai":
+        from openai import AsyncOpenAI
+
+        client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        set_default_openai_client(client)
+        return OpenAIChatCompletionsModel(
+            model=os.getenv("OPENAI_MODEL"),
+            openai_client=client,
+        )
+
+    if MODEL_PROVIDER == "claude":
+        from anthropic import AsyncAnthropic
+
+        client = AsyncAnthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+        return AnthropicMessagesModel(
+            model=os.getenv("CLAUDE_MODEL"),
+            anthropic_client=client,
+        )
+
+    if MODEL_PROVIDER == "deepseek":
+        from openai import AsyncOpenAI
+
+        client = AsyncOpenAI(
+            api_key=os.getenv("DEEPSEEK_API_KEY"),
+            base_url=os.getenv("DEEPSEEK_BASE_URL"),
+        )
+        set_default_openai_client(client)
+        return OpenAIChatCompletionsModel(
+            model=os.getenv("DEEPSEEK_MODEL"),
+            openai_client=client,
+        )
+
+    if MODEL_PROVIDER == "gemini":
+        import google.generativeai as genai
+
+        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+        return GoogleGenerativeAIChatModel(
+            model=os.getenv("GEMINI_MODEL"),
+        )
+
+    raise ValueError(f"Unsupported MODEL_PROVIDER: {MODEL_PROVIDER}")
+
 
 # Disable tracing
 set_tracing_disabled(disabled=True)
@@ -59,10 +114,7 @@ async def run_agent_with_servers(file_server: MCPServer, automation_server: MCPS
         name="Automation Agent",
         instructions=instructions,
         mcp_servers=[file_server, automation_server],
-        model= OpenAIChatCompletionsModel(
-            model=AZURE_OPENAI_CHAT_DEPLOYMENT_MODEL,
-            openai_client=client
-        )
+        model=get_model(),
     )
 
     result = await Runner.run(
