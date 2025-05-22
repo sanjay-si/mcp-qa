@@ -23,11 +23,10 @@ This project serves as a conceptual implementation that demonstrates the potenti
 .
 ├── .env                   # Environment variables configuration
 ├── .env.template          # Template for environment variables
-├── playwright/            # Main project directory
-│   └── llm-automation/    # AI automation implementation
-│       ├── program.py     # Main Python script for AI testing
-│       ├── agent_instructions.txt # Instructions for the AI agent
-│       └── node_modules/  # JavaScript dependencies
+├── qa_automation/         # AI automation implementation
+│   ├── main.py            # Entry point for AI testing
+│   ├── instructions/      # Instructions for the AI agent
+├── playwright/            # Directory for Playwright assets
 ```
 
 ## Technical Architecture
@@ -103,10 +102,9 @@ The integration of AI in testing changes the role of QA automation engineers:
 ## Getting Started
 
 1. Clone this repository
-2. Copy `.env.template` to `.env` and fill in credentials for your chosen model provider.
-   - Set `MODEL_PROVIDER` to `azure`, `openai`, `claude`, `deepseek`, or `gemini`.
-3. Navigate to the `playwright/llm-automation` directory
-4. Run `python program.py` to start the AI-powered testing
+2. Copy `.env.template` to `.env` and fill in your Azure OpenAI credentials
+3. Navigate to the `qa_automation` directory
+4. Run `python -m qa_automation.main` to start the AI-powered testing
 
 ## Usage Examples
 
