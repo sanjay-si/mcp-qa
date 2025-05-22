@@ -102,16 +102,9 @@ The integration of AI in testing changes the role of QA automation engineers:
 ## Getting Started
 
 1. Clone this repository
-<<<<<<< HEAD
 2. Copy `.env.template` to `.env` and fill in your Azure OpenAI credentials
 3. Navigate to the `qa_automation` directory
 4. Run `python -m qa_automation.main` to start the AI-powered testing
-=======
-2. Copy `.env.template` to `.env` and fill in credentials for your chosen model provider.
-   - Set `MODEL_PROVIDER` to `azure`, `openai`, `claude`, `deepseek`, or `gemini`.
-3. Navigate to the `playwright/llm-automation` directory
-4. Run `python program.py` to start the AI-powered testing
->>>>>>> main
 
 ## Usage Examples
 
